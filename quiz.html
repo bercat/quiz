@@ -1,0 +1,163 @@
+<html>
+<head>
+	<title>Quiz</title>
+
+	<style>
+	#quiz article{
+		display: none;
+	}
+	</style>
+</head>
+<body>
+
+<section id="quiz">
+	<input id="startQuizBtn" type="button" value="Start">
+
+	<article id="quiz1">
+		<h3>Hvem er dette?</h3>
+		<img src="andersHejlsberg.jpg">
+		<br>
+
+		<label>
+			<input type="radio" name="quiz1" value="jr">
+			John Resig
+		</label>
+		<label>
+			<input type="radio" name="quiz1" value="ah">
+			Anders Hejlsberg
+		</label>
+		<label>
+			<input type="radio" name="quiz1" value="be">
+			Brendan Eich
+		</label>
+		<br>
+		<input id="quiz1NesteBtn" class="quizKnapp" type="button" value="Neste">
+	</article>	
+
+	<article id="quiz2">
+		<h3>Hvem er dette?</h3>
+		<img src="johnResig.jpg">
+		<br>
+		<label>
+			<input type="radio" name="quiz2" value="jr">
+			John Resig
+		</label>
+		<label>
+			<input type="radio" name="quiz2" value="ah">
+			Anders Hejlsberg
+		</label>
+		<label>
+			<input type="radio" name="quiz2" value="be">
+			Brendan Eich
+		</label>
+		<br>
+		<input id="quiz2NesteBtn" class="quizKnapp" type="button" value="Neste">
+	</article>	
+
+	<article id="quiz3">
+		<h3>Hvem er dette?</h3>
+		<img src="brendanEich.jpg">
+		<br>
+		<label>
+			<input type="radio" name="quiz3" value="jr">
+			John Resig
+		</label>
+		<label>
+			<input type="radio" name="quiz3" value="ah">
+			Anders Hejlsberg
+		</label>
+		<label>
+			<input type="radio" name="quiz3" value="be">
+			Brendan Eich
+		</label>
+		<br>
+		<input id="quiz2NesteBtn" class="quizKnapp" type="button" value="Neste">
+	</article>	
+
+	<article id="ferdig">
+		<h3>Gratulerer du er ferdig!</h3>
+	</article>
+
+</section>
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script>
+
+//egendefinert referanse til jQuery
+var karin = jQuery.noConflict();
+
+karin(function(){
+
+	var quizJSON = {
+			"quizIndex": 1,
+			"quizSpm": [
+				{"spm": "1", "riktigSvar": "ah"},
+				{"spm": "2", "riktigSvar": "jr"},
+				{"spm": "3", "riktigSvar": "be"}
+			],
+			"antSpm": 0
+	};
+	quizJSON.antSpm = quizJSON.quizSpm.length;
+
+	function visQuiz(){
+		karin("#quiz article:visible").slideUp(750);
+
+		var $quizAaVise = karin("#quiz" + quizJSON.quizIndex);
+
+		$quizAaVise.slideDown(750);
+	}
+
+	function settEvents(){
+		karin("#startQuizBtn").on("click", function(){
+			//skjule denne knappen
+			//vise quiz
+
+			karin(this).fadeTo(750, 0, function(){
+				visQuiz();
+			});
+		});
+
+		karin("input.quizKnapp").on("click", function(){			
+			//skjule quizspørsmål som ligger der før viser neste
+			//sjekke om svar er riktig/sjekke om spørsmålet er besvart
+			//sjekke om det finnes et neste quizspørsmål
+			//viser neste quizspørsmål			
+
+			sjekkSvar();
+
+		});
+	}
+
+	function sjekkSvar(){
+		var valgtSvar = karin("[name=quiz" + quizJSON.quizIndex + "]:checked").val();
+
+			if(valgtSvar === quizJSON.quizSpm[quizJSON.quizIndex-1].riktigSvar){
+				alert("Riktig");
+
+				if(quizJSON.quizIndex < quizJSON.antSpm){
+					quizJSON.quizIndex++;
+					visQuiz();
+				}else{
+					visGratulasjon();
+				}
+
+			}else if(valgtSvar === undefined){
+				alert("Du må velge noe!");
+			}else{
+				alert("Feil");
+			}	
+	}
+
+	function visGratulasjon(){
+		karin("#quiz article:visible").slideUp(750);
+		karin("#ferdig").slideDown(750);
+	}
+
+	var init = function(){
+		settEvents();
+	}();
+
+});
+</script>
+</body>
+</html>
