@@ -83,10 +83,10 @@
 <script src="js/jquery-3.3.1.min.js"></script>
 <script>
 
-//egendefinert referanse til jQuery med karin
-var karin = jQuery.noConflict();
+//egendefinert referanse til jQuery 
+var quest = jQuery.noConflict();
 
-karin(function(){
+quest(function(){
 
 	var quizJSON = {
 			"quizIndex": 1,
@@ -100,24 +100,24 @@ karin(function(){
 	quizJSON.antSpm = quizJSON.quizSpm.length;
 
 	function visQuiz(){
-		karin("#quiz article:visible").slideUp(750);
+		quest("#quiz article:visible").slideUp(750);
 
-		var $quizAaVise = karin("#quiz" + quizJSON.quizIndex);
+		var $quizAaVise = quest("#quiz" + quizJSON.quizIndex);
 
 		$quizAaVise.slideDown(750);
 	}
 
 	function settEvents(){
-		karin("#startQuizBtn").on("click", function(){
+		quest("#startQuizBtn").on("click", function(){
 			//skjule denne knappen
 			//vise quiz
 
-			karin(this).fadeTo(750, 0, function(){
+			quest(this).fadeTo(750, 0, function(){
 				visQuiz();
 			});
 		});
 
-		karin("input.quizKnapp").on("click", function(){			
+		quest("input.quizKnapp").on("click", function(){			
 			//skjule quizspørsmål som ligger der før viser neste
 			//sjekke om svar er riktig/sjekke om spørsmålet er besvart
 			//sjekke om det finnes et neste quizspørsmål
@@ -129,7 +129,7 @@ karin(function(){
 	}
 
 	function sjekkSvar(){
-		var valgtSvar = karin("[name=quiz" + quizJSON.quizIndex + "]:checked").val();
+		var valgtSvar = quest("[name=quiz" + quizJSON.quizIndex + "]:checked").val();
 
 			if(valgtSvar === quizJSON.quizSpm[quizJSON.quizIndex-1].riktigSvar){
 				alert("Riktig");
@@ -149,8 +149,8 @@ karin(function(){
 	}
 
 	function visGratulasjon(){
-		karin("#quiz article:visible").slideUp(750);
-		karin("#ferdig").slideDown(750);
+		quest("#quiz article:visible").slideUp(750);
+		quest("#ferdig").slideDown(750);
 	}
 
 	var init = function(){
